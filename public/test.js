@@ -1,44 +1,70 @@
-#!/usr/bin/nodejs
-
-// -- NOTE - THIS IS A STAND-ALONE DEMO SCRIPT !!!!!!!!!!!!!!!!!!!!  //
-//  IF YOU RUN THIS AS A SERVER, ...IT... ...WILL... ...FAIL..       //
-
-//  to use this demo call:
-//  $node test.js
-
-//  when you are happy with the way it works, WEAVE it back into your server 
-//  copy-pasting into a server does not make sense and guarantees brokenness
-
-
-// load package - we'll use this for python
-var child_process = require('child_process')
-
-var path  = require('path');
+// var mysql = require('mysql');
+// //create a connection pool
+// sqlParams = {
+//   connectionLimit : 10,
+//   user            : 'site_dining-with',
+//   password        : 'EjwTnQN9QghPf6UYUBvwShnk',
+//   host            : 'mysql1.csl.tjhsst.edu',
+//   port            : 3306,
+//   database        : 'site_dining-with-rona'
+// }
+// var pool  = mysql.createPool(sqlParams);
 
 
-// the python executable. This can be a path to a venv, or whatever version of python you care
-python_exe = 'python3';
+// function doHomework(subject, callback) {
+//     var my_list = ['ChIJjVqBaYFStokR3zBYXXvgqmA']
+//     pool.query('SELECT restaurant_id, average_rating FROM ratings WHERE restaurant_id = ?',my_list[0], function (error, results, fields) {
+//         if (error) throw error;
+            
+//         var return_ratings_count = results.length;
+//         var return_avg_rating = 0
+        
+//         if(return_ratings_count > 0){
+//                     //iterate through the results to get comments and average rating
+//             var sum = 0
+//             for(let c = 0; c<results.length; c++){
+//                 sum += results[c].average_rating;
+//             }
+//             return_avg_rating = sum/return_ratings_count;
+//         }
+//         console.log(return_avg_rating);
+    
+//         pool.end();
+//         callback(return_avg_rating);
 
-// the python file you will use. 
-//  - I use path.join to create the full path to the file.  
-pythonFile = path.join(__dirname, 'get_restaurants.py');
+//     });  
+// }
+// function alertFinished(input_text){
+//   return input_text;
+// }
 
-// This is the data that will be passed to python. 
-//  - The values of the key 'input' will be parsed by stdin in python.
-//    Therefore, in this design paradigm, you must have a key named 'input', 
-//    AND all of your data must reside underneath it.
-feed_dict = { input: '22152' };
+// function my_function(){
+//     return doHomework('math', alertFinished);
+// }
 
-// spawn the (python) child process syncronously
-//  - child_process has many multiple ways to call system processes, the most common are
-//    spawn and exec. the main difference between these two are:
-//       spawn returns a stream -- and exec returns a buffer.
-py = child_process.spawnSync(python_exe, [pythonFile], feed_dict );
+// console.log(my_function());
 
-// the py object we just created contains tons of information about the executed python 
-//   process. Among the data we get back at this point are the contents of stdout.
-//   This is how you extract the contents of sys.stdout
-py_response = py['stdout'].toString();
+var dict = {
+  "x": 0,
+  "y": 0,
+  "z": 0,
+  "a": 5,
+  "b": 7,
+  "c": 11,
+  "d": 17,
+  "t": 3
+};
 
-// log the response 
-console.log(py_response)
+// Create items array
+var items = Object.keys(dict).map(function(key) {
+  return [key, dict[key]];
+});
+
+// Sort the array based on the second element
+items.sort(function(first, second) {
+  return second[1] - first[1];
+});
+
+// Create a new array with only the first 5 items
+console.log(items.slice(0, dict.length));
+

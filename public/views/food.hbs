@@ -1,80 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="css/nav_bar.css">
+        <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://kit.fontawesome.com/9cb41bb1f0.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
 
-<!--NAVIGATION DRAWER-->
-<div class="top-nav">
-    <ul class="top-horizontal">
-      <li class="top-menu lefty"><a href="javascript:void(0)">TJHSST</a></li>
-      <li class="top-menu lefty"><a href="javascript:void(0)">Home</a></li>
-      <li class="top-menu lefty"><a href="javascript:void(0)">Labs</a></li>
-      <li class="top-menu righty"><a href="javascript:void(0)">Settings</a></li>
-    </ul>
-</div>
+<span class="fa fa-star-half-alt" ></span>
 
-<!--MAIN CONTENT PAGE-->
-<div class="content">
+</body>
 
-    <!--THE FORM THAT WILL GATHER THE INPUT-->
-    <form id="take_order">
-      <span>Choorse an item from our menu: </span>
-      <input type="number" id="inp_menu_item" name="menu_item" min="1" max="5">
-    </form>
-
-    <!--THE BUTTON. WHEN PRESSED, WILL CALL placeOrder()-->
-    <button type="button" onclick="placeOrder()">Place Order</button>
-
-    <!--A PLACEHOLDER THAT WILL BE POPULATED WITH CONTENT-->
-    <div>
-        <p id="table"></p>
-    </div>
-    
-</div>
-
-
-
-<!-- ------------------------ SCRIPTS ARE PLACED AT THE END OF THE BODY ------------------------ -->
-<!--LOAD JQUERY-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-
-<!--CUSTOM SCRIPT-->
-<script type="text/javascript">
-
-    // FUNCTION FOR RESPONDING TO BUTTON PRESS
-    // -- Take the order from the user
-    function placeOrder() {
-
-
-        // SEND THE ORDER TO THE KITCHEN
-       $.ajax({
-                url: "kitchen",                      // goes to https://user.tjhsst.edu/pckosek/kitchen
-                type: "get",                         // use a 'get' type request
-                data:  $('#take_order').serialize(), //serialize form and pass to server
-                success: function(response) {
-    
-                    // THIS FUNCTION IS CALLED WHEN KITCHEN IS COMPLETE 
-                    // -- AND -- everthing went ok
-
-                    // update the display
-                    // (bring the order to the customer)
-                    r = document.getElementById("table");
-                    r.innerHTML = response.food;
-                },
-                error: function (stat, err) {
-
-                    // THIS FUNCTION IS CALLED WHEN KITCHEN IS COMPLETE 
-                    // -- BUT -- something went wrong (like invalid menu_item)
-
-                    // update the display
-                    // (bring the explanation to the customer)
-                    r = document.getElementById("table");
-                    r.innerHTML = 'something went wrong in the kitchen!';
-                }       
-            });
-    }
-            
-</script>
