@@ -55,35 +55,24 @@ app.get('/', function(req, res){
 
 })
 
-app.get('/food', function(req, res){
-    
-    // render the page
-    res.render('food');
-   
-
-})
-
 
 //run the python script to get all nearby restaurants
 app.get('/nearby_restaurants', function(req, res){
     var current_zipcode = req.query.zip;
     var current_restaurant = req.query.rest_id;
 
-    if(isZipcode(current_zipcode)){
-        pythonFile = path.join(__dirname, 'search_by_name.py');
-        feed_dict = { input: (current_restaurant+","+current_zipcode) };
-        py = child_process.spawnSync(python_exe, [pythonFile], feed_dict );
-        py_response = py['stdout'].toString();
+    pythonFile = path.join(__dirname, 'search_by_name.py');
+    feed_dict = { input: (current_restaurant+","+current_zipcode) };
+    py = child_process.spawnSync(python_exe, [pythonFile], feed_dict );
+    py_response = py['stdout'].toString();
         
-        if(py_response.length>0){
+    if(py_response.length>0){
             get_ratings(py_response);
-        }
-        else{
-            res.send("");
-        }
-        
-        
     }
+
+        
+        
+    
     else{
         res.send("Invalid")
     }
@@ -210,8 +199,7 @@ app.get('/search_name', function(req, res){
     var current_restaurant = req.query.one_rest;
     var current_zipcode = req.query.one_zip;
     
-    if(isZipcode(current_zipcode)){
-    
+
         pythonFile = path.join(__dirname, 'search_by_name.py');
         
         feed_dict = { input: (current_restaurant+","+current_zipcode) };
@@ -219,10 +207,7 @@ app.get('/search_name', function(req, res){
         py_response = py['stdout'].toString();
         
         res.send(py_response);
-    }
-    else{
-        res.send("Invalid")
-    }
+
     
 })
 
@@ -301,15 +286,7 @@ app.get('/get_URL', function(req, res){
 
 // -------------- additional functions -------------- //
 
-//check if the input is a valid zipcode
-function isZipcode(entered){
-    if(entered.length==5 && entered.match(/^[0-9]+$/) != null){
-        return true
-    }
-    else{
-        return false
-    }
-}
+
 
 
 
